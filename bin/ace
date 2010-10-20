@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+if RUBY_VERSION < "1.9.1"
+  abort "Ace requires Ruby 1.9."
+end
+
+base   = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+libdir = File.expand_path(File.join(File.dirname(base), "..", "lib"))
+
+# because of system installation, there is bin/../lib, but not bin/../lib/ace
+if File.directory?(File.join(libdir, "ace"))
+  $:.unshift(libdir) unless $:.include?(libdir)
+end
+
+require "ace"
+require "ace/dsl"
+
+if File.join(Dir.pwd, "boot.rb")
+  require File.join(Dir.pwd, "boot.rb")
+else
+  abort "No boot.rb!"
+end
+
+if File.join(Dir.pwd, "rules.rb")
+  path  = File.join(Dir.pwd, "rules.rb")
+  code  = File.read(path)
+  rules = Ace::DSL.new
+  begin
+    rules.instance_eval(code)
+  rescue Exception => exception
+    puts "Error in DSL: #{exception.message}"
+    puts exception.backtrace
+    exit 1
+  end
+else
+  abort "No rules.rb!"
+end
+
+rules.rules.each do |klass, files|
+  puts "#{klass} #{files.inspect}"
+  files.each do |file|
+    if File.binread(file).match(/^-{3,5}\s*$/)
+      raw_item = Ace::RawItem.new(file).tap(&:parse)
+      item = klass.create(raw_item.metadata, raw_item.content)
+    else
+      item = klass.create(Hash.new, File.read(file))
+    end
+    item.original_path = file
+  end
+end
+
+puts
+
+rules.generators.each do |generator_klass|
+  puts "Running #{generator_klass}"
+  generator = generator_klass.new
+  begin
+    if generator.respond_to?(:run)
+      generator.run
+    else
+      abort "Generator #{generator.inspect} doesn't respond to the #run method!"
+    end
+  rescue Exception => exception
+    puts "Error in generator #{generator.inspect}: #{exception.message}"
+    puts exception.backtrace
+    exit 1
+  end
+end
+
+puts
+
+Ace::Item.instances.each do |item|
+  puts "Generating #{item.output_path}"
+  item.save!
+end

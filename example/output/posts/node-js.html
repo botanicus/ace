@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head></head>
+  <body>
+    <div id='main'>
+      <h1>My Coooooool Bloogiiiiseeeeek!</h1>
+      <p class="excerpt">
+        Node.js is an evented I/O framework for the V8 JavaScript engine. It is intended for writing scalable network programs such as web servers.
+      </p>
+      
+      <p>
+        Node.js is similar in purpose to Twisted for Python, Perl Object Environment for Perl, and EventMachine for Ruby. Unlike most JavaScript, it is not executed in a web browser, but it is rather related to server-side JavaScript. Node.js implements some CommonJS specifications[1]. Node.js includes a REPL environment for interactive testing.
+      </p>
+      
+      <pre>
+      var sys = require('sys'),
+          http = require('http');
+      
+      http.createServer(function (request, response) {
+          response.writeHead(200, {'Content-Type': 'text/plain'});
+          response.end('Hello World\n');
+      }).listen(8000);
+      
+      sys.puts('Server running at http://127.0.0.1:8000/');
+      </pre>
+      
+      <p>
+        <em>From <a href="http://en.wikipedia.org/wiki/Node.js">Wikipedia.org</em>.
+      </p>
+    </div>
+  </body>
+</html>

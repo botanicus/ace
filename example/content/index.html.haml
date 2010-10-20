@@ -1,0 +1,5 @@
+- extends "base.html"
+
+- Post.each do |post|
+  %h2= post.title
+  = post.excerpt

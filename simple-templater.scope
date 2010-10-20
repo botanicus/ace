@@ -1,0 +1,6 @@
+# encoding: utf-8
+
+SimpleTemplater.scope(:ace) do
+  path = File.expand_path("../project_generator", __FILE__)
+  SimpleTemplater.register(:ace, :project, File.expand_path(path))
+end

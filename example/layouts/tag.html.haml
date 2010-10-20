@@ -1,0 +1,6 @@
+- extends "base.html"
+
+- block(:body) do
+  %h1 My Coooooool Bloogiiiiseeeeek!
+  - item.content.each do |post|
+    = post.metadata[:title]

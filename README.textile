@@ -1,0 +1,18 @@
+h1. Why you should be interested in ace?
+
+In Ace, every page is an instance
+Typically I want to define methods, like @post.excerpt
+
+There are also *generators* available for easier generating items on the fly.
+
+Ace has *template inheritance*. I love template inheritance, it's more flexible pattern than layouts.
+
+Tasks for deployment included.
+
+h1. The boot process
+
+# load @boot.rb@ where the
+# load the rules (controllers / globs mapping)
+# load & instantiate the items: only the renderables (concrete post)
+# run the filters, layoutin' ... actually this can be defined in the controller
+# match the routes, write the files

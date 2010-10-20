@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+if RUBY_VERSION < "1.9.1"
+  abort "Ace requires Ruby 1.9."
+end
+
+base   = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
+libdir = File.expand_path(File.join(File.dirname(base), "..", "lib"))
+
+# because of system installation, there is bin/../lib, but not bin/../lib/ace
+if File.directory?(File.join(libdir, "ace"))
+  $:.unshift(libdir) unless $:.include?(libdir)
+end
+
+begin
+  require "simple-templater"
+rescue LoadError
+  abort "You have to install simple-templater first!"
+end
+
+begin
+  templater = SimpleTemplater.new(:ace)
+  generator = templater.find(:project)
+  generator.run(ARGV)
+rescue SimpleTemplater::TargetAlreadyExist => exception
+  abort exception.message
+rescue Interrupt
+  exit
+rescue Exception => exception
+  abort "Exception #{exception.inspect} occured during running generator #{generator.inspect}\n#{exception.backtrace.join("\n")}"
+end
