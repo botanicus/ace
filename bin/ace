@@ -53,7 +53,7 @@ end
 puts
 
 rules.generators.each do |generator_klass|
-  puts "Running #{generator_klass}"
+  puts "~ Running #{generator_klass}"
   generator = generator_klass.new
   begin
     if generator.respond_to?(:run)
@@ -70,7 +70,7 @@ end
 
 puts
 
-Ace::Item.instances.each do |item|
-  puts "Generating #{item.output_path}"
+Ace::Item.all_instances.each do |item|
+  puts "~ Generating #{item.output_path}"
   item.save!
 end

@@ -3,7 +3,10 @@
 require "ace/filters"
 require "template-inheritance"
 
-TemplateInheritance::Template.paths << File.join(Dir.pwd, "layouts")
+layouts = File.join(Dir.pwd, "layouts")
+unless TemplateInheritance::Template.paths.include?(layouts)
+  TemplateInheritance::Template.paths.unshift(layouts)
+end
 
 module Ace
   class LayoutFilter < Filter

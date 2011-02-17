@@ -34,14 +34,24 @@ module Ace
   # This class represents the items which will be
   # eventually rendered like concrete posts, tags etc.
   class Item
-    @@subclasses ||= Array.new
     def self.inherited(subclass)
-      @@subclasses << subclass
+      self.subclasses << subclass
     end
 
-    @@instances ||= Array.new
+    def self.subclasses
+      @subclasses ||= Array.new
+    end
+
     def self.instances
-      @@instances
+      @instances ||= Array.new
+    end
+
+    def self.all_subclasses
+      self.subclasses + self.subclasses.map(&:subclasses).flatten
+    end
+
+    def self.all_instances
+      self.all_subclasses.map(&:instances).flatten
     end
 
     def self.before_filters
@@ -111,11 +121,11 @@ module Ace
     end
 
     def save!
-      content = self.render.chomp # so filters can influence output_path
+      content = self.render # so filters can influence output_path
 
       FileUtils.mkdir_p File.dirname(self.output_path)
       File.open(self.output_path, "w") do |file|
-        file.puts content
+        file.puts(content)
       end
     end
   end

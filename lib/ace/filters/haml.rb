@@ -3,6 +3,7 @@
 require "haml"
 require "ace/filters"
 
+# This is just a plain Haml, no template inheritance.
 module Ace
   class HamlFilter < Filter
     # http://haml.hamptoncatlin.com/docs/rdoc/classes/Haml/Engine.html
