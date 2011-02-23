@@ -11,6 +11,10 @@ require "yaml"
 require "fileutils"
 
 module Ace
+  module Helpers
+    # include your helpers here
+  end
+
   class RawItem
     attr_accessor :path, :metadata, :content
     def initialize(path)
@@ -19,11 +23,11 @@ module Ace
 
     def parse
       pieces = @data.split(/^-{3,5}\s*$/)
-      if pieces.size < 3
-        raise RuntimeError.new(
-          "The file '#{content_filename}' appears to start with a metadata section (three or five dashes at the top) but it does not seem to be in the correct format."
-        )
-      end
+      # if pieces.size < 3
+      #   raise RuntimeError.new(
+      #     "The file '#{path}' appears to start with a metadata section (three or five dashes at the top) but it does not seem to be in the correct format."
+      #   )
+      # end
 
       # Parse
       self.metadata = YAML.load(pieces[1]).inject(Hash.new) { |metadata, pair| metadata.merge(pair[0].to_sym => pair[1]) } || Hash.new
@@ -131,10 +135,5 @@ module Ace
   end
 
   class Asset < Item
-  end
-
-  module Helpers
-    def link_to(anchor, path_or_item, options = nil)
-    end
   end
 end
