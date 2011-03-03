@@ -40,6 +40,8 @@ module Ace
   class Item
     def self.inherited(subclass)
       self.subclasses << subclass
+      subclass.before_filters.push(*self.before_filters)
+      subclass.after_filters.push(*self.after_filters)
     end
 
     def self.subclasses
