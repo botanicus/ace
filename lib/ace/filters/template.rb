@@ -12,8 +12,10 @@ TemplateInheritance::Template.paths << File.join(Dir.pwd, "content")
 
 module Ace
   class TemplateFilter < Filter
+    TEMPLATE_EXTS_PATTERN = /\.(haml|erb|erubis)$/i
+
     def call(item, content)
-      if item.output_path
+      if item.output_path.match(TEMPLATE_EXTS_PATTERN)
         item.output_path = item.output_path.split(".")[0..-2].join(".")
       end
 
