@@ -115,6 +115,23 @@ module Ace
       end
     end
 
+    def server_path
+      absolute = self.output_path.sub(/^output\//, "")
+      "/#{absolute}"
+    end
+
+    def base_url
+      self.config[:base_url]
+    end
+
+    def permalink
+      if self.config[:base_url].nil?
+        raise "You have to add :base_url into config.yml or redefine #base_url method!"
+      end
+
+      "#{self.base_url}/#{self.server_path}"
+    end
+
     attr_writer :output_path
     def output_path
       @output_path ||= begin
