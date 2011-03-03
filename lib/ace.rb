@@ -45,7 +45,7 @@ module Ace
     end
 
     def self.subclasses
-      @subclasses ||= Array.new
+      @subclasses ||= [self]
     end
 
     def self.instances
