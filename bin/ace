@@ -52,14 +52,14 @@ end
 
 puts
 
-rules.generators.each do |generator_klass|
-  puts "~ Running #{generator_klass}"
-  generator = generator_klass.new
+# Generator is anything what provides #generate method.
+rules.generators.each do |generator|
+  puts "~ Running generator #{generator}"
   begin
-    if generator.respond_to?(:run)
-      generator.run
+    if generator.respond_to?(:generate)
+      generator.generate
     else
-      abort "Generator #{generator.inspect} doesn't respond to the #run method!"
+      abort "Generator #{generator.inspect} doesn't respond to the #generate method!"
     end
   rescue Exception => exception
     puts "Error in generator #{generator.inspect}: #{exception.message}"
