@@ -131,7 +131,7 @@ module Ace
         raise "You have to add :base_url into config.yml or redefine #base_url method!"
       end
 
-      "#{self.base_url}/#{self.server_path}"
+      "#{self.base_url}#{self.server_path}"
     end
 
     attr_writer :output_path
