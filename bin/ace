@@ -71,6 +71,5 @@ end
 puts
 
 Ace::Item.all_instances.each do |item|
-  puts "~ Generating #{item.output_path}"
   item.save!
 end
