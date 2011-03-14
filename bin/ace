@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 if RUBY_VERSION < "1.9.1"
-  abort "Ace requires Ruby 1.9."
+  abort "Ace requires Ruby 1.9"
 end
 
 base   = File.symlink?(__FILE__) ? File.readlink(__FILE__) : __FILE__
