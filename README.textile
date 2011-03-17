@@ -26,3 +26,7 @@ h1. The boot process
 # load & instantiate the items: only the renderables (concrete post)
 # run the filters, layoutin' ... actually this can be defined in the controller
 # match the routes, write the files
+
+h1. Links
+
+* "Ace: Static Sites Generator":http://blog.101ideas.cz/posts/ace-static-site-generator.html
