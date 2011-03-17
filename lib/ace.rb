@@ -9,6 +9,7 @@
 
 require "yaml"
 require "fileutils"
+require "ace/filters/sass"
 
 module Ace
   module Helpers
@@ -171,5 +172,6 @@ module Ace
   end
 
   class Asset < Item
+    before Ace::SassFilter
   end
 end
