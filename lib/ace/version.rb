@@ -1,5 +1,5 @@
 # encoding: utf-8
 
 module Ace
-  VERSION = "0.2"
+  VERSION = "0.3"
 end

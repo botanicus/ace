@@ -1,4 +1,12 @@
+= Version 0.3
+  * Added LazyRendering mixin.
+  * Added SassFilter.
+  * Added PygmentsFilter for syntax highlighting.
+  * Added Static class for copying static files.
+
 = Version 0.2
+  * Filters inheritance.
+  * Item#permalink and Item#server_path.
 
 = Version 0.1
   * Items
