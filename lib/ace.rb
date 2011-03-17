@@ -144,29 +144,13 @@ module Ace
       end
     end
 
-    def compare_mtime(one, others)
-      File.exist?(one) && File.mtime(one) > others.map { |post| File.mtime(post) }.max
-    end
-
-    def source_files
-      [self.original_path]
-    end
-
-    def fresh?
-      @fresh ||= compare_mtime(self.output_path, self.source_files)
-    end
-
     def save!
-      if self.fresh?
-        puts "~ [IGNORE] #{self.output_path}"
-      else
-        puts "~ [UPDATE] #{self.output_path}"
-        content = self.render # so filters can influence output_path
+      content = self.render # so filters can influence output_path
+      puts "~ [RENDER] #{self.output_path}"
 
-        FileUtils.mkdir_p File.dirname(self.output_path)
-        File.open(self.output_path, "w") do |file|
-          file.puts(content)
-        end
+      FileUtils.mkdir_p File.dirname(self.output_path)
+      File.open(self.output_path, "w") do |file|
+        file.puts(content)
       end
     end
   end
