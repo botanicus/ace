@@ -10,6 +10,7 @@
 require "yaml"
 require "fileutils"
 require "ace/filters/sass"
+require "digest/sha1"
 
 module Ace
   module Helpers
@@ -135,6 +136,10 @@ module Ace
       "#{self.base_url}#{self.server_path}"
     end
 
+    def digest(data)
+      Digest::SHA1.hexdigest(data)
+    end
+
     attr_writer :output_path
     def output_path
       @output_path ||= begin
@@ -145,12 +150,24 @@ module Ace
     end
 
     def save!
-      content = self.render # so filters can influence output_path
       puts "~ [RENDER] #{self.output_path}"
+      content = self.render # so filters can influence output_path
 
-      FileUtils.mkdir_p File.dirname(self.output_path)
-      File.open(self.output_path, "w") do |file|
-        file.puts(content)
+      begin
+        old_content = File.open(self.output_path, "rb") { |f| f.read }
+      rescue
+        old_content = ''
+      end
+
+      if self.digest(content) != self.digest(old_content)
+        warn "~ CRC isn't same, save new content into #{self.output_path}"
+        # puts old_content.inspect
+        # puts content.inspect
+
+        FileUtils.mkdir_p File.dirname(self.output_path)
+        File.open(self.output_path, "w") do |file|
+          file.puts(content)
+        end
       end
     end
   end
