@@ -11,6 +11,7 @@ require "yaml"
 require "fileutils"
 require "ace/filters/sass"
 require "digest/sha1"
+require "date"
 
 module Ace
   module Helpers
@@ -23,6 +24,13 @@ module Ace
       @data = File.read(path)
     end
 
+    def check_metadata_created_at(path)
+      if self.metadata[:title]
+        year, month, day = File.basename(path).slice(0,10).split('-')
+        self.metadata[:created_at] ||= Date.new(year.to_i, month.to_i, day.to_i)
+      end
+    end
+
     def parse
       pieces = @data.split(/^-{3,5}\s*$/)
       # if pieces.size < 3
@@ -33,6 +41,7 @@ module Ace
 
       # Parse
       self.metadata = YAML.load(pieces[1]).inject(Hash.new) { |metadata, pair| metadata.merge(pair[0].to_sym => pair[1]) } || Hash.new
+      # TODO: check metadata[:created_at] and supply it from filename
       self.content = pieces[2..-1].join.strip
     end
   end
