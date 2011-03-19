@@ -149,6 +149,12 @@ module Ace
       Digest::SHA1.hexdigest(data)
     end
 
+    def feeds
+      @feeds ||= begin
+        RSSFeed.subclasses.map(&:new)
+      end
+    end
+
     attr_writer :output_path
     def output_path
       @output_path ||= begin
