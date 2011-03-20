@@ -40,7 +40,7 @@ end
 rules.rules.each do |klass, files|
   # puts "#{klass} #{files.inspect}"
   files.each do |file|
-    if File.binread(file).match(/^-{3,5}\s*$/)
+    if File.binread(file).match(/^-{3,5}\s*$/) # TODO: this should be a filter or lazy-loaded
       puts "~ Read #{file} with parse"
       raw_item = Ace::RawItem.new(file).tap(&:parse)
       raw_item.check_metadata_created_at(file)
