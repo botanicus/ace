@@ -8,7 +8,7 @@ require "ace/filters"
 #   - metadata
 #   - config
 class Post < Ace::Item
-  before Ace::LayoutFilter, layout: "post.html"
+  before Ace::TemplateFilter, layout: "post.html"
 
   def document
     Nokogiri::HTML(self.content)

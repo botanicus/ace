@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 class Tag < Ace::Item
-  before Ace::LayoutFilter, layout: "tag.html"
+  before Ace::TemplateFilter, layout: "tag.html"
 end
 
 class TagPagesGenerator

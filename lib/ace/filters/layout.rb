@@ -1,26 +1,10 @@
 # encoding: utf-8
 
-require "ace/filters"
-require "template-inheritance"
+require_relative "template"
 
-layouts = File.join(Dir.pwd, "layouts")
-unless TemplateInheritance::Template.paths.include?(layouts)
-  TemplateInheritance::Template.paths.unshift(layouts)
-end
+warn "~ TemplateFilter is deprecated, use TemplateFilter from now on."
 
 module Ace
-  class LayoutFilter < Filter
-    class Scope
-      include Ace::Helpers
-    end
-
-    def initialize(options)
-      @path = options[:layout]
-    end
-
-    def call(item, content)
-      template = TemplateInheritance::Template.new(@path, Scope.new)
-      return template.render(item: item)
-    end
+  class TemplateFilter < TemplateFilter
   end
 end
