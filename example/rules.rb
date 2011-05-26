@@ -5,4 +5,4 @@ rule Post, "posts/*.html"
 rule Ace::Asset, "assets/**/*"
 
 # generators
-generator TagPagesGenerator#, "/tags/:slug"
+generator Tag#, "/tags/:slug"

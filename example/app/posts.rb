@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 require "nokogiri"
-require "ace/filters"
+require "ace/filters/template"
 
 # Inheritted methods:
 #   - content

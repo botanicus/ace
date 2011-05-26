@@ -1,11 +1,11 @@
 # encoding: utf-8
 
+# The class represents all the tags, whereas
+# the instance represents each single tag.
 class Tag < Ace::Item
   before Ace::TemplateFilter, layout: "tag.html"
-end
 
-class TagPagesGenerator
-  def tags
+  def self.tags
     Post.instances.inject(Hash.new) do |buffer, post|
       if tags = post.metadata[:tags]
         tags.each do |tag|
@@ -17,7 +17,7 @@ class TagPagesGenerator
     end
   end
 
-  def run
+  def self.generate
     self.tags.each do |tag_title, items|
       tag_name = tag_title.downcase.gsub(" ", "-")
       metadata = {title: tag_title, timestamp: Time.now}

@@ -1,0 +1,7 @@
+# encoding: utf-8
+
+source :rubygems
+
+gem "ace", path: ".."
+gem "nokogiri"
+gem "nake", group: "bundle"

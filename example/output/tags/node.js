@@ -4,7 +4,6 @@
   <body>
     <div id='main'>
       <h1>My Coooooool Bloogiiiiseeeeek!</h1>
-      Ruby Programming Language
       Node.js Asynchronous JavaScript Framework
     </div>
   </body>
