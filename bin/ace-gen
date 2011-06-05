@@ -19,9 +19,14 @@ rescue LoadError
   abort "You have to install simple-templater first!"
 end
 
+templater = SimpleTemplater.new(:ace)
+generator = templater.find(:project)
+
+if generator.nil?
+  abort "Generator not found!"
+end
+
 begin
-  templater = SimpleTemplater.new(:ace)
-  generator = templater.find(:project)
   generator.run(ARGV)
 rescue SimpleTemplater::TargetAlreadyExist => exception
   abort exception.message
