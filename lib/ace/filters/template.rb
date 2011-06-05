@@ -16,12 +16,31 @@ module Ace
     end
 
     def initialize(options = Hash.new)
-      @path = options[:layout]
+      @layout = options[:layout] if options.has_key?(:layout)
     end
 
     def call(item, content)
-      if @path.nil?
-        @path = item.original_path.sub("content/", "")
+      path = @layout || item.original_path.sub(/content\//, "") # We remove content/, because content is in TI paths.
+      if path.nil?
+        raise <<-EOF.gsub(/ {10}/m, "")
+          You have to specify output_path of #{self.inspect}
+
+          Usage:
+
+          class Post < Ace::Item
+            before Ace::TemplateFilter, layout: "posts.html"
+          end
+
+          # OR:
+
+          class Post < Ace::Item
+            before Ace::TemplateFilter
+
+            # And have #original_path set up (Ace does it by default,
+            # but if you are using some custom code it might not work
+            # out of the box).
+          end
+        EOF
       end
 
       parts = item.output_path.split(".")
@@ -33,7 +52,7 @@ module Ace
         raise "Template can be named either with one suffix as template.haml or with two of them as template.html.haml resp. template.xml.haml."
       end
 
-      template = TemplateInheritance::Template.new(@path, Scope.new)
+      template = TemplateInheritance::Template.new(path, Scope.new)
       return template.render(item: item)
     end
   end

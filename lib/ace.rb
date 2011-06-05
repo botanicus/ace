@@ -51,8 +51,14 @@ module Ace
   class Item
     def self.inherited(subclass)
       self.subclasses << subclass
-      subclass.before_filters.push(*self.before_filters)
-      subclass.after_filters.push(*self.after_filters)
+
+      self.before_filters.each do |instance|
+        subclass.before_filters << instance.dup
+      end
+
+      self.after_filters.each do |instance|
+        subclass.after_filters << instance.dup
+      end
     end
 
     def self.subclasses
