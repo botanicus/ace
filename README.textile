@@ -5,3 +5,17 @@ Ace is a static page generator like "Nanoc":http://nanoc.stoneship.org, "Jekyll"
 Also, last but not least, Ace has a real template inheritance. Layouts are for kids, real men use template inheritance! What's the advantage? It's incredibly flexible.
 
 Check "Ace: Static Sites Generator":http://blog.101ideas.cz/posts/ace-static-site-generator.html for more information or you can take a look at "sources":https://github.com/botanicus/blog.101ideas.cz of "my blog":http://blog.101ideas.cz to have something to play with!
+
+h1. Installation
+
+If you want to use @ace-gen@:
+
+<pre>
+gem install ace --development
+</pre>
+
+Without @ace-gen@:
+
+<pre>
+gem install ace
+</pre>
