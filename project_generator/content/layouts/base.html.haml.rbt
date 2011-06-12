@@ -1,0 +1,13 @@
+!!! 5
+%html
+  %head
+    %title= block(:title, "<%= @name %>")
+    %meta{"http-equiv" => "content-type", content: "text/html; charset=utf-8"}
+    %meta{"http-equiv" => "content-language", content: "en"}
+    %meta{name: "description", content: block(:description, "")}
+    %meta{name: "keywords", content: block(:keywords, "")}
+    = block(:head)
+  %body
+    = block(:body)
+    #footer
+      &copy; <%= Time.now.year %> &ndash; #{Time.now.year} <%= @user %> | Powered by <a href="https://github.com/botanicus/ace">Ace</a>.

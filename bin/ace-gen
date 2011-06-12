@@ -20,6 +20,8 @@ rescue LoadError
 end
 
 templater = SimpleTemplater.new(:ace)
+templater.discover!
+
 generator = templater.find(:project)
 
 if generator.nil?

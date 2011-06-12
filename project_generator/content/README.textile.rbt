@@ -1,0 +1,11 @@
+h1. About
+
+This is "<%= @name %>":<%= @url %>. It is written in "Ace":https://github.com/botanicus/ace, a powerful generator of static sites.
+
+h1. Usage
+
+_*NOTE:* You need Ruby 1.9.2 or later._
+
+# Install all the dependencies via bundler: @bundle install@.
+# Generate the output by running @./tasks.rb generate@.
+# Run @./config.ru@ and view the content at "localhost:9292":http://localhost:9292/.
