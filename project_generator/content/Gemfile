@@ -19,6 +19,6 @@ gem "ace"
 gem "nake"
 gem "template-inheritance"
 
-group(:development)
+group(:development) do
   gem "rack"
 end
