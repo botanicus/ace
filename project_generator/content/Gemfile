@@ -18,6 +18,7 @@ source "http://gemcutter.org"
 gem "ace"
 gem "nake"
 gem "template-inheritance"
+# gem "pupu"
 
 group(:development) do
   gem "rack"

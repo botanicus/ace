@@ -8,8 +8,8 @@ Encoding.default_external = "utf-8"
 require "bundler/setup"
 
 # Custom setup.
-require "pupu/adapters/ace"
-Pupu.media_prefix = "/assets"
+# require "pupu/adapters/ace"
+# Pupu.media_prefix = "/assets"
 
 require "helpers"
 
