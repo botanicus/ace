@@ -10,4 +10,4 @@
   %body
     = block(:body)
     #footer
-      &copy; <%= Time.now.year %> &ndash; #{Time.now.year} <%= @user %> | Powered by <a href="https://github.com/botanicus/ace">Ace</a>.
+      == &copy; <%= Time.now.year %> &ndash; #{Time.now.year} <%= @user %> | Powered by <a href="https://github.com/botanicus/ace">Ace</a>.
