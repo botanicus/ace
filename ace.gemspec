@@ -11,7 +11,6 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/botanicus/ace"
   s.summary = "Ace is highly flexible static pages generator with template inheritance."
   s.description = "" # TODO: long description
-  s.cert_chain = nil
   s.email = Base64.decode64("c3Rhc3RueUAxMDFpZGVhcy5jeg==\n")
   s.has_rdoc = true
 
