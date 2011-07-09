@@ -11,6 +11,8 @@ require "nokogiri"
 # class Post < Ace::Item
 #   before Ace::ImageThumbnailerFilter, default_thumb_size: 550
 # end
+
+# FIXME: generate thumbnail to output/, not to content/ !!!
 module Ace
   class ImageThumbnailerFilter < Filter
     def thumb_path(file_name)
