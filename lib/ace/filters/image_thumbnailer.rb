@@ -12,12 +12,11 @@ require "nokogiri"
 #   before Ace::ImageThumbnailerFilter, default_thumb_size: 550
 # end
 
-# FIXME: generate thumbnail to output/, not to content/ !!!
 module Ace
   class ImageThumbnailerFilter < Filter
     def thumb_path(file_name)
       @file_name ||= file_name
-      @thumb_path ||= file_name.gsub(/\.([^\.]*)$/, '_thumb.\1')
+      @thumb_path ||= file_name.gsub(/content\/(.+)\.([^\.]*)$/, 'output/\1_thumb.\2')
     end
 
     def thumb_server_path
