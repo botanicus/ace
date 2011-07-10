@@ -2,9 +2,9 @@
 
 require_relative "template"
 
-warn "~ TemplateFilter is deprecated, use TemplateFilter from now on."
+warn "~ LayoutFilter is deprecated, use TemplateFilter from now on."
 
 module Ace
-  class TemplateFilter < TemplateFilter
+  class LayoutFilter < TemplateFilter
   end
 end
