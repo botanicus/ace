@@ -1,6 +1,7 @@
 = Version 0.4
   * Added project generator (ace-gen).
   * Fixed filter for image thumbnails.
+  * Added --no-generate argument.
 
 = Version 0.3
   * Added LazyRendering mixin.

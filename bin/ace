@@ -71,8 +71,9 @@ rules.generators.each do |generator|
   end
 end
 
-puts
-
-Ace::Item.all_instances.each do |item|
-  item.save!
+unless ARGV.include?("--no-generate")
+  puts
+  Ace::Item.all_instances.each do |item|
+    item.save!
+  end
 end
