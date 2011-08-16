@@ -37,6 +37,11 @@ module Ace
         self.content = pieces[2..-1].join.strip
       end
 
+      set_timestamps_in_metadata
+    end
+
+    private
+    def set_timestamps_in_metadata
       self.metadata[:created_at] ||= File.ctime(self.path)
       self.metadata[:updated_at] ||= File.mtime(self.path)
     end
@@ -89,16 +94,17 @@ module Ace
       self.after_filters << filter.new(*args)
     end
 
-    def self.create(metadata, content)
-      self.new(metadata, content).tap(&:register)
+    def self.create(*args)
+      self.new(*args).tap(&:register)
     end
 
     # Content can be anything, not just a string.
     attr_accessor :metadata, :content
     attr_accessor :original_path
-    def initialize(metadata, content)
-      @metadata = metadata
-      @content  = content
+    def initialize(metadata, content, original_path)
+      @metadata      = metadata
+      @content       = content
+      @original_path = original_path
     end
 
     def config

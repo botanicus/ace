@@ -43,12 +43,11 @@ rules.rules.each do |klass, files|
     if File.binread(file).match(/^-{3,5}\s*$/) # TODO: this should be a filter or lazy-loaded
       puts "~ Read #{file} with parse"
       raw_item = Ace::RawItem.new(file).tap(&:parse)
-      item = klass.create(raw_item.metadata, raw_item.content)
+      item = klass.create(raw_item.metadata, raw_item.content, file)
     else
       puts "~ Read #{file} without parse"
-      item = klass.create(Hash.new, File.read(file))
+      item = klass.create(Hash.new, File.read(file), file)
     end
-    item.original_path = file
   end
 end
 
