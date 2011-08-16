@@ -21,28 +21,24 @@ module Ace
   class RawItem
     attr_accessor :path, :metadata, :content
     def initialize(path)
+      @path = path
       @data = File.read(path)
-    end
-
-    def check_metadata_created_at(path)
-      if self.metadata[:title]
-        year, month, day = File.basename(path).slice(0,10).split('-')
-        self.metadata[:created_at] ||= Date.new(year.to_i, month.to_i, day.to_i)
-      end
     end
 
     def parse
       pieces = @data.split(/^-{3,5}\s*$/)
-      # if pieces.size < 3
-      #   raise RuntimeError.new(
-      #     "The file '#{path}' appears to start with a metadata section (three or five dashes at the top) but it does not seem to be in the correct format."
-      #   )
-      # end
+      if pieces.length == 1 || @data.empty?
+        self.metadata = Hash.new
+        self.content  = pieces.first
+      else
+        self.metadata = begin
+          YAML.load(pieces[1]).inject(Hash.new) { |metadata, pair| metadata.merge(pair[0].to_sym => pair[1]) } || Hash.new
+        end
+        self.content = pieces[2..-1].join.strip
+      end
 
-      # Parse
-      self.metadata = YAML.load(pieces[1]).inject(Hash.new) { |metadata, pair| metadata.merge(pair[0].to_sym => pair[1]) } || Hash.new
-      # TODO: check metadata[:created_at] and supply it from filename
-      self.content = pieces[2..-1].join.strip
+      self.metadata[:created_at] ||= File.ctime(self.path)
+      self.metadata[:updated_at] ||= File.mtime(self.path)
     end
   end
 
