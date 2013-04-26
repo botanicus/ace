@@ -21,12 +21,6 @@ Gem::Specification.new do |s|
   s.default_executable = "ace"
   s.require_paths = ["lib"]
 
-  # Ruby version
-  # Current JRuby with --1.9 switch has RUBY_VERSION set to "1.9.2dev"
-  # and RubyGems don't play well with it, so we have to set minimal
-  # Ruby version to 1.9, even if it actually is 1.9.1
-  s.required_ruby_version = ::Gem::Requirement.new("~> 1.9")
-
   # Dependencies
   # RubyGems has runtime dependencies (add_dependency) and
   # development dependencies (add_development_dependency)
