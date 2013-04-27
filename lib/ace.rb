@@ -182,7 +182,7 @@ module Ace
         # puts content.inspect
 
         FileUtils.mkdir_p File.dirname(self.output_path)
-        File.open(self.output_path, "w") do |file|
+        File.open(self.output_path, "wb") do |file|
           file.puts(content)
         end
       end
