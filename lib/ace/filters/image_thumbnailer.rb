@@ -19,12 +19,12 @@ module Ace
     end
 
     def thumbnail_nodeset(link, doc)
-      link  = Nokogiri::XML::Node.new("a", doc)
-      image = Nokogiri::XML::Node.new("img", doc)
-      link.set_attribute("href", link)
-      image.set_attribute("src", to_thumb(link))
-      image.parent = link
-      return link
+      link_node  = Nokogiri::XML::Node.new("a", doc)
+      image_node = Nokogiri::XML::Node.new("img", doc)
+      link_node.set_attribute("href", link)
+      image_node.set_attribute("src", to_thumb(link))
+      image_node.parent = link_node
+      return link_node
     end
 
     def call(item, content)
