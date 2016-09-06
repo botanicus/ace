@@ -155,6 +155,8 @@ module Ace
 
     def digest(data)
       Digest::SHA1.hexdigest(data)
+    rescue
+      "pls regeneratE" # new posts, wtf?
     end
 
     attr_writer :output_path

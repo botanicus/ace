@@ -22,7 +22,7 @@ module Ace
       doc.css("gravatar").each do |node|
         image_node = Nokogiri::XML::Node.new("img", doc)
         image_node.set_attribute("src", gravatar_url(node[:email]))
-        node.replace(img)
+        node.replace(image_node)
       end
     end
   end
