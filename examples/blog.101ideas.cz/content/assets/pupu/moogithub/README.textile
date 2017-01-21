@@ -1,0 +1,20 @@
+h1. About moogithub
+
+# TODO: write what your pupu is all about
+
+h1. About Pupu
+
+Pupu is a plugin system for media stuff like JS & CSS frameworks, plugins for the JS & CSS frameworks, icon sets etc. It knows dependencies and it has CLI interface, so it's really easy to bundle such plugins into your app. Please see "Pupu homepage":http://github.com/botanicus/pupu for more informations.
+
+h1. Installation
+
+* Run @pupu install hotovson/moogithub@ inside of your application
+* Change defaults in /assests/javascripts/initializers/moogithub.js as needed
+
+h1. Usage
+
+# TODO: write how to use your library
+
+h1. Links
+
+* "Source Code":http://github.com/hotovson/pupu-moogithub

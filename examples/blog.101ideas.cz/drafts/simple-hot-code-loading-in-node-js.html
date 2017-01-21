@@ -1,0 +1,23 @@
+<p>I bet you already read great&nbsp;<a>Hot Code Loading in Node.js</a>&nbsp;post. The solution introduced there is nice and robust, but it has one problem: you have to use non-standard extension to get it working. The reason is: "<em>Ensure that any <code>require()</code> calls within an already-loaded module will return functions corresponding to the pre-hot load version of the code.</em>"</p>
+<p>I understand the need but I don't think it's important for my application I'm currently writing. And I bet it won't be important for a lot of users. When you do incompatible changes, then you obviously need to restart the app entirely. And this also can help in development a lot. Here's the code (if you want to experiment with it, clone the whole&nbsp;<a>Gist</a>):</p>
+<pre>var module = require("./module"),
+    sys    = require("sys"),
+    fs     = require("fs");
+
+fs.watchFile("./module.js", function (current, previous) {
+  // ignore atime changes
+  if (current.mtime.toString() !== previous.mtime.toString()) {
+    sys.puts("~ Reloading module");
+    <strong>process.mainModule.moduleCache["module"] = null;</strong>
+    module = require("./module");
+    sys.puts("Version changed: " + module.version);
+  };
+});
+</pre>
+<p>There is one important gotcha about <code>fs.watchFile()</code>: it call given callback not just when you change the file, but also when you access the file, so you need to check mtime of current and previous file metadata manually.</p>
+<p>I made a <a href="http://gist.github.com/360219">helper</a>&nbsp;to do it even easier. Usage is simple:</p>
+<pre>sys.reloadable("task", function (module) {
+  task = module;
+});
+</pre>
+<p>There is one important gotcha: when it first run, it runs synchronously, so it doesn't broke any code. Then it register a callback to the <code>fs.watchFile()</code> method, so your code will be reloaded automatically.</p>

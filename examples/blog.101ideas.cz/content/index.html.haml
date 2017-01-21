@@ -1,0 +1,15 @@
+- extends "base.html"
+
+- block(:body) do
+  - item.posts.each do |post|
+    %h2
+      %a{href: post.server_path}= post.title
+    ~ post.excerpt
+
+  - if item.next_page
+    <<
+    %a{href: item.next_page_path} Next page
+
+  - if item.previous_page
+    %a{href: item.previous_page_path} Previous page
+    >>

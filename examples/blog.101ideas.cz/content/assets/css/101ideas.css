@@ -1,0 +1,157 @@
+a {
+  color: #900;
+}
+
+a:hover {
+  color: #c00;
+}
+
+a:visited {
+  color: #600;
+}
+
+#header h1 {
+  font-size: 4em;
+  margin: 0.75em 0 .25em 0;
+}
+
+#header a {
+  color: black;
+  text-decoration: none;
+}
+
+#header h2 {
+  font-size: 1.5em;
+  padding: 0 0 .5em 7em;
+  letter-spacing: 1.33;
+}
+
+.main-inner {
+  margin: 0 2em 0 0;
+}
+
+#main h1 {
+  color: #c00;
+  font-size: 2em;
+  margin: .5em 0 .5em 0;
+}
+
+#main h2 {
+  color: #600;
+  font-size: 1.67em;
+  margin: 1.33em 0 .5em 0;
+  line-height: 1;
+}
+
+#main h3 {
+  color: black;
+  font-size: 1.33em;
+  margin: 1.33em 0 .5em 0;
+}
+
+#main p {
+  margin: 0 0 1em;
+  text-indent: 0;
+}
+
+#metadata {
+  color: #666;
+  text-align: right;
+}
+
+#series-nav {
+  border-top: 1px solid #bbb;
+  margin-bottom: 3em;
+}
+
+#series-nav .next {
+  float: right;
+}
+
+#side-panel {
+  font-size: 90%;
+  color: #333;
+}
+
+#side-panel h2,h3,h4,h5,h6 {
+  color: #666;
+}
+
+#side-panel h2 {
+  font-size: 1.5em;
+  border-bottom: 1px solid #bbb;
+  margin-top: 1em;
+  margin-bottom: 0.25em;
+}
+
+#footer {
+/*  background-color: #eee;*/
+  color: #666;
+  padding: .25em;
+  text-align: left;
+  border-top: 1px solid #bbb;
+}
+
+.bottom-border {
+  border-bottom: 1px solid #bbb;
+}
+
+.rssfeed {
+  padding: 0.25em 1em 0.25em 19px;
+  background: url('/assets/img/feed-icon-14x14.png') no-repeat left center;
+}
+
+.ribbon {
+  overflow: hidden;
+  /* top right corner */
+  position: absolute;
+  height: 15em;
+  top: 0;
+  right: 0;
+}
+
+.ribbon a {
+  background-color: #a00;
+  border: 1px solid #faa;
+  color: #fff;
+  display: block;
+  font: bold 81.25% 'Helvetiva Neue', Helvetica, Arial, sans-serif;
+  margin: 0.05em 0 0.075em 0;
+  padding: 0.5em 4em;
+  text-align: center;
+  text-decoration: none;
+  position: relative;
+  right: -4em;
+  top: 3.5em;
+  /* shadow */
+  text-shadow: 0 0 0.5em #444;
+  /* 45 deg cw rotation */
+  -moz-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  /* shadow */
+  -moz-box-shadow: 0 0 1em #888;
+  -webkit-box-shadow: 0 0 1em #888;
+}
+
+/* pygmetized <pre> */
+div.highlight {
+  color: #eee;
+  background-color: #000;
+  margin: 1em 0;
+  padding: 1em;
+  overflow: auto;
+  -moz-border-radius: .25em;
+  border-radius: .25em;
+}
+
+div.highlight pre {
+  margin: 0;
+}
+
+#excerpt {
+  font-style: italic;
+}
+
+.offer { background-color: red; color: white }
+.subscribe { background-color: darkgreen; color:white; }
+.offer a, .subscribe a { color: #F0E68C; }

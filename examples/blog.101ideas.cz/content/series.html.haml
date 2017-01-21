@@ -1,0 +1,10 @@
+- extends "base.html"
+
+- block(:body) do
+  %h1= "Mr. botanicus's series "
+  - Post.series.keys.each do |key|
+    %h2= "#{key} (#{Post.series[key].count})"
+    %ol
+      - Post.series[key].each do |post|
+        %li
+          %a{href: post.server_path}= post.title

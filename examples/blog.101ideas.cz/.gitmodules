@@ -1,0 +1,3 @@
+[submodule "output"]
+	path = output
+	url = server:/repos/blog.101ideas.cz

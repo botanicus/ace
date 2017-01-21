@@ -1,0 +1,30 @@
+h1. About Pupu
+
+"Pupu":http://github.com/botanicus/pupu is a framework-agnostic plugin system for media stuff like JS/CSS frameworks and its plugins, icon sets etc. You can "search GitHub":http://github.com/search?type=Repositories&language=&q=pupu&repo=&langOverride=&x=9&y=24&start_value=1 for more examples. It provides CLI interface for searching, installing and updating pupus from GitHub and it also provides a helper for including static files from pupu into your HTML page. Both CLI and helper can handle dependencies.
+
+CLI example:
+
+<pre>
+pupu install botanicus/autocompleter
+~ Downloading botanicus/autocompleter
+~ Downloading dependency botanicus/mootools
+</pre>
+
+h1. About blueprint
+
+h1. Usage
+
+h2. Layout
+
+<pre>
+# for basic functionality
+pupu :blueprint
+</pre>
+
+h2. Initializers
+
+<pre>
+window.addEvent("domready", function() {
+  // do the init stuff
+})
+</pre>

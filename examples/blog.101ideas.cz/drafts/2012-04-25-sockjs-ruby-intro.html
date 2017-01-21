@@ -1,0 +1,90 @@
+---
+title: "SockJS: WebSockets for Everyone"
+tags: [ruby, sockjs, websockets, web development]
+---
+
+<p id="excerpt">
+  WebSockets can make web development more enjoyable, <strong>decoupling easier</strong> and the code <strong>easier to understand</strong>. Unfortunately browsers not supporting WebSockets can't be easily ignored yet. SockJS is trying to solve this issue by providing <strong>fallback transports</strong> for browsers not supporting WebSockets.
+</p>
+
+<p>
+  <a href="http://sockjs.org">SockJS</a> is a <strong>cross domain solution</strong> and it's designed to <strong>work through restrictive corporate proxies</strong>. SockJS <strong>connection is established swiftly</strong>, unless there's a misbehaving proxy in the middle. This is one of the reasons why <strong>SockJS doesn't use Flash fallback</strong>, which often needs 3 seconds in order to detect problems.
+</p>
+
+<h2>How to Use It?</h2>
+
+<p>
+  On the client side you just have <code>SockJS</code> object which you use exactly as you'd use the <code>WebSocket</code> class:
+</p>
+
+<pre lang="javascript">
+&lt;script src=&quot;http://cdn.sockjs.org/sockjs-0.2.1.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;script&gt;
+  var sock = new SockJS(&quot;http://mydomain.com/my_prefix&quot;);
+
+  // Events: onopen, onmessage, onclose.
+  sock.onmessage = function(e) {
+    console.log(&quot;message&quot;, e.data);
+  };
+&lt;/script&gt;
+</pre>
+
+<p>
+  And on the server side you simply use <code>SockJS</code> as a Rack middleware:
+</p>
+
+<pre lang="ruby">
+# Run one SockJS app on /echo.
+use SockJS, &quot;/echo&quot; do |connection|
+  connection.subscribe do |session, message|
+    session.send(message)
+  end
+end
+
+# Your main app, anything else than /echo/*.
+run MyMainApp.new
+</pre>
+
+<p>
+  For more in-depth example see sockjs-ruby <a href="https://github.com/sockjs/sockjs-ruby">README</a>.
+</p>
+
+<p>
+  At the moment <strong>only Thin is supported</strong>. That's because Rack itself is inherently synchronous and there's no standard API or convention for handling asynchronous stuff. <strong>Ruby 1.9.2 or higher</strong> is required. For details about dependencies and installation, check <a href="http://TODO">SockJS Ruby release announcement</a> on the RabbitMQ blog.
+</p>
+
+
+<h2>Alternatives</h2>
+<p>
+  SockJS isn't the first of its kind. <a href="http://socket.io">Socket.io</a> has been around for quite a while as you probably noticed. However there are some significant differences: firstly Socket.io is a Node.js framework, <strong>Ruby isn't supported</strong><sup><a href="#footnote-1">1)</a></sup>. Secondly Socket.io defines  its own semantic, whereas SockJS is <strong>merely a fallback mechanism for WebSockets</strong> using <strong>WebSockets API</strong>. More about the motivation for writing SockJS as well as more detailed comparison with Socket.io can be found in article <a href="http://www.rabbitmq.com/blog/2011/08/22/sockjs-web-messaging-aint-easy/">SockJS: Web Messaging Ain't Easy</a>.
+</p>
+
+
+<h2>Supported Browsers</h2>
+<p>
+  SockJS is intended to work for <strong>all modern browsers</strong>. In the schema below you can see which transport would be used for which browser:
+</p>
+
+<img src="http://www.rabbitmq.com/wp-uploads/2011/09/sockjs-transport.png">
+
+<p>
+  Used transports as well as dealing with load balancing and proxies is thoroughly explained in article <a href="http://www.rabbitmq.com/blog/2011/09/13/sockjs-websocket-emulation">SockJS: WebSocket Emulation</a> and on <a href="http://sockjs.org">SockJS main page</a>.
+</p>
+
+<h2>So ...</h2>
+<p>
+  What are you waiting for? SockJS-ruby can be installed from RubyGems as usual:
+</p>
+
+<!-- FIXME! -->
+<!-- <p><thumbnail src="/assets/img/gem-install-sockjs.png" /></p> -->
+<a href="/assets/img/gem-install-sockjs.png">
+  <img src="/assets/img/gem-install-sockjs_thumb.png" />
+</a>
+
+
+<h3>Notes</h3>
+<ul>
+  <ol><a name="footnote-1">1)</a> There is a <a href="https://github.com/Oblong/Socket.io-Ruby">port of Socket.io for Ruby</a>, but Socket.io isn't really agnostic, whereas SockJS defines a simple protocol and is therefore truly language independent.</ol>
+</ul>

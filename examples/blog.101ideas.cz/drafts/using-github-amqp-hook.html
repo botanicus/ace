@@ -1,0 +1,161 @@
+---
+title: Using GitHub AMQP Hook
+tags: [IT, GitHub, AMQP, Ruby, WebSockets, Redis]
+---
+
+<!--
+Real-time Commits Notifications With AMQP, Redis, WebSockets and GitHub hook
+-->
+
+<p id="excerpt">
+</p>
+
+<h2>#1 RabbitMQ &amp; GitHub</h2>
+
+<h3>RabbitMQ</h3>
+<ul>
+  <li>Install RabbitMQ. On Debian, it's <code>apt-get install rabbitmq-server</code>.</li>
+  <li>RabbitMQ provides a default user <code>guest</code> with password <code>guest</code>. It's a good thing for development, but in production you want to remove the default user because of security. You can do so by running <code>rabbitmqctl delete_user guest</code>.</li>
+  <li>Of course you need a user, so let's create one: <code>rabbitmqctl add_user github_notificator password</code>.</li>
+</ul>
+
+<h3>GitHub Hooks</h3>
+<img src="/assets/img/github-amqp-hook.png" width="560">
+
+<h2>#2 Client Daemon</h2>
+
+<pre lang="ruby">
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require "json"
+require "amq/client"
+require "amq/client/adapters/event_machine"
+require "amq/client/queue"
+require "em-websocket"
+
+EM.run do
+  AMQ::Client::EventMachineClient.connect do |client|
+    channel = AMQ::Client::Channel.new(client, 1)
+    channel.open do |method|
+      Subscription.slugs.each do |slug|
+        queue = AMQ::Client::Queue.new(client, channel, slug)
+        queue.consume(true)
+        queue.on_delivery do |method, header, body|
+          data = JSON.parse(body)["payload"]
+          Subscription.get(queue.name) &lt;&lt; data
+        end
+      end
+    end
+  end
+end
+</pre>
+
+<h2>#3 Redis</h2>
+<pre lang="ruby">
+# encoding: utf-8
+
+require "redis"
+require "json"
+
+class Subscription
+  # @return [Redis] Cached redis instance.
+  def self.redis
+    @redis ||= Redis.new
+  end
+
+  def self.slugs
+    self.redis.lrange("slugs", 0, -1)
+  end
+
+  # @return [Subscription] New Subscription instance with commits.
+  def self.get(slug)
+    key  = self.redis.hget(slug, "pattern")
+    data = self.redis.lrange(key, 0, -1)
+    data.map! { |json| JSON.parse(json) }
+    self.new(key, data)
+  end
+
+  # {slug => {name: name, pattern: pattern}}
+  def self.create(name, slug, pattern)
+    self.redis.multi do
+      @redis.rpush("slugs", slug)
+      @redis.hset(slug, "name", name)
+      @redis.hset(slug, "pattern", pattern)
+    end
+
+    self.amqp_subscribe(slug, pattern)
+  end
+
+  def self.amqp_subscribe(queue_name, routing_pattern)
+    require "amq/client"
+    require "amq/client/adapters/event_machine"
+    require "amq/client/queue"
+
+    EM.run do
+      AMQ::Client::EventMachineClient.connect do |client|
+        channel = AMQ::Client::Channel.new(client, 1)
+        channel.open do |method|
+          queue = AMQ::Client::Queue.new(client, channel, queue_name)
+          queue.declare(false, true) do |method|
+            queue.bind("github", routing_pattern) do |method|
+              EM.stop
+            end
+          end
+        end
+      end
+    end
+  end
+
+  attr_reader :data
+  def initialize(key, data = Array.new)
+    @key, @data = key, data
+  end
+
+  def push(commit)
+    index = self.class.redis.rpush(@key, commit.to_json)
+    self.class.redis.ltrim(@key, 0, 20 - 2)
+    return commit
+  end
+  alias_method :&lt;&lt;, :push
+
+  def destroy
+    self.class.redis.del(@key)
+  end
+end
+</pre>
+
+<h2>#4 WebSockets</h2>
+<pre lang="ruby">
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require "json"
+require "amq/client"
+require "amq/client/adapters/event_machine"
+require "amq/client/queue"
+require "em-websocket"
+
+EM.run do
+  EM::WebSocket.start(host: "0.0.0.0", port: 8080) do |socket|
+    AMQ::Client::EventMachineClient.connect do |client|
+      channel = AMQ::Client::Channel.new(client, 1)
+      channel.open do |method|
+        Subscription.slugs.each do |slug|
+          queue = AMQ::Client::Queue.new(client, channel, slug)
+          queue.consume(true)
+          queue.on_delivery do |method, header, body|
+            data = JSON.parse(body)["payload"]
+
+            # 1) Store to Redis.
+            Subscription.get(queue.name) &lt;&lt; data
+
+            # 2) Notify clients via websockets.
+            socket.send({slug => data}.to_json)
+          end
+        end
+      end
+    end
+  end
+end
+</pre>

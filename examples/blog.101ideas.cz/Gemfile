@@ -1,0 +1,27 @@
+# encoding: utf-8
+
+# Local development
+#
+#   bundle config local.ace ~/Projects/sources/ace
+#   bundle install --local
+
+source "http://rubygems.org"
+
+gem "nokogiri"
+gem "rack"
+gem "albino"
+
+gem "ace", github: "botanicus/ace", branch: "master"
+gem "pupu"
+gem "sass"
+gem "nake"
+gem "media-path"
+gem "template-inheritance"
+gem "helpers"
+
+group(:development) do
+  gem "pry"
+
+  gem "rspec-core"
+  gem "rspec-expectations"
+end

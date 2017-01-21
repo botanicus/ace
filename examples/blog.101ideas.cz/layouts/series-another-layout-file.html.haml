@@ -1,0 +1,11 @@
+-# FIXME: why don't work with filename 'layouts/series.html.haml'?
+
+- extends "base.html"
+
+- block(:body) do
+  -# #debug= item.inspect
+  %h1== #{item.name}
+  - item.posts.each do |post|
+    %h2
+      %a{href: post.server_path}= post.title
+    = post.excerpt

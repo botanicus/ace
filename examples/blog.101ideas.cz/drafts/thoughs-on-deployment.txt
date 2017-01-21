@@ -1,0 +1,10 @@
+Deployment:
+1) Generate as much stuff as possible on localhost.
+2) Run some shell commands on the remote machine.
+3) Rsync.
+
+Server environment is made of projects. Everything is part of a project. Server is then just a register of projects. Each project has recipes to run on its own.
+
+cookbooks/nginx
+contract-digest.com/deployment/recipe.sh -> depends_on :nginx
+contract-digest.com/deployment/nginx (git submodule | gem)

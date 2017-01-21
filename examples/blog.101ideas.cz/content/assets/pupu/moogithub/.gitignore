@@ -1,0 +1,12 @@
+*~
+.*.swp
+.#*
+.svn/*
+.DS_Store
+.yardoc
+.cache
+
+/*.gem
+script/*
+gems/*
+!gems/cache

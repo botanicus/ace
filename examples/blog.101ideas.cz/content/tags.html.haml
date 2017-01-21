@@ -1,0 +1,10 @@
+- extends "base.html"
+
+- block(:body) do
+  - Tag.tags.each do |tag|
+    %h2
+      %a{href: tag.server_path}= tag.name
+    - tag.posts.each do |post|
+      %ul
+        %li
+          %a{href: post.server_path}= post.title

@@ -1,0 +1,59 @@
+GIT
+  remote: git://github.com/botanicus/ace.git
+  revision: 6c9c170a93aa074567d9d5a7c7e2e3dc577c1a12
+  branch: master
+  specs:
+    ace (0.4.9)
+      template-inheritance
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    albino (1.3.3)
+      posix-spawn (>= 0.3.6)
+    coderay (1.0.9)
+    diff-lcs (1.2.4)
+    haml (4.0.2)
+      tilt
+    helpers (0.1.1)
+    media-path (0.1.4)
+    method_source (0.8.1)
+    nake (0.0.9.5)
+      term-ansicolor
+    nokogiri (1.5.9)
+    posix-spawn (0.3.6)
+    pry (0.9.12.1)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    pupu (0.2.1)
+      media-path
+    rack (1.5.2)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    sass (3.2.8)
+    slop (3.4.4)
+    template-inheritance (0.3.1)
+      haml
+      tilt
+    term-ansicolor (1.1.5)
+    tilt (1.3.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  ace!
+  albino
+  helpers
+  media-path
+  nake
+  nokogiri
+  pry
+  pupu
+  rack
+  rspec-core
+  rspec-expectations
+  sass
+  template-inheritance

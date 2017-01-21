@@ -1,0 +1,10 @@
+<pre>/ fonts
+- enhance_block(:head) do
+  = block(:head)
+  %script{src: "http://use.typekit.com/byv3vso.js"}
+  :javascript
+    try { Typekit.load() } catch(e) {}
+
+- extend_block(:content) do
+  .tk-museo-sans= block(:content)
+</pre>

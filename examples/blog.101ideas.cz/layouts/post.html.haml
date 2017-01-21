@@ -1,0 +1,39 @@
+- extends "base.html"
+
+- block(:body) do
+  - if item.has_tags?
+    #metadata= "Tags: #{item.tag_list.join(", ")}"
+  - if item.in_series?
+    #series= "Part of #{item.series_title} series."
+
+  %h1= item.metadata[:title]
+  - if item.updated?
+    %p
+      %em== This post has been updated at #{item.updated_at.strftime("%d/%m/%Y")}.
+
+  ~ item.content
+  - if item.in_series?
+    #series-nav
+      - if item.has_previous?
+        %a.prev{href: item.previous_part.server_path}= item.previous_part.metadata[:title]
+      - if item.has_next?
+        %a.next{href: item.next_part.server_path}= item.next_part.metadata[:title]
+
+  #disqus_thread
+  :javascript
+    var disqus_shortname = 'rubyblog';
+
+    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+    // var disqus_identifier = 'unique_dynamic_id_1234';
+    var disqus_url = '#{item.permalink}';
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+
+  %noscript
+    Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+  %a.dsq-brlink{href: "http://disqus.com"} blog comments powered by <span class="logo-disqus">Disqus</span>

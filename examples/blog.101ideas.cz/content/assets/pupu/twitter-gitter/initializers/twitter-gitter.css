@@ -1,0 +1,6 @@
+#tweets-here  { margin:20px 0 0 0; }
+.tweet  { padding:5px 10px; height:48px; clear:both; margin:5px 0; background:#eee; }
+.tweet img  { margin-right:10px; }
+.tweet strong  { color:navy; }
+.tweet span  { font-size:11px; color:#666; }
+.clear  { clear:both; }

@@ -1,0 +1,64 @@
+!!! 5
+%html
+  %head
+    %title= block(:title, "Blog 101Ideas.cz")
+    %meta{"http-equiv" => "content-type", content: "text/html; charset=utf-8"}
+    %meta{"http-equiv" => "content-language", content: "en"}
+    %meta{name: "description", content: block(:description, "")}
+    %meta{name: "keywords", content: block(:keywords, "")}
+    %link{rel: "icon", href: "/assets/img/logo.jpg", type: "image/jpeg"}
+    = pupu :blueprint, plugins: ["fancy-type"]
+    -# = pupu :mootools, more: false
+    = pupu :"twitter-gitter"
+    =# pupu :flash
+    =# pupu :autocompleter, type: "request"
+    =# javascripts "application", *block(:javascripts, Array.new)
+    =# stylesheets *block(:stylesheets, Array.new)
+    = partial "./google_analytics.html"
+
+    %link{href: "/assets/css/monokai.css", media: "screen,projection", rel: "stylesheet", type: "text/css"}
+    %link{href: "/assets/css/101ideas.css", media: "screen,projection", rel: "stylesheet", type: "text/css"}
+
+    / RSS autodiscovery
+    - item.feeds.each do |feed|
+      = feed.to_html_autodiscovery_link
+    = block(:head)
+  %body
+    .container
+      .ribbon
+        %a{href: "https://github.com/botanicus", rel: "me"} Fork me on GitHub
+      #header
+        %h1
+          %a{href: "/"}
+            Blog
+            101Ideas.cz
+            %img{src: "/assets/img/logo.jpg"}
+        %h2.alt.bottom-border Self development, Start-ups, IT ...
+      #main.span-15
+        .main-inner= block(:body)
+
+      #side-panel.span-9.last
+        %a{href: "/about.html"} About
+
+        %h2 RSS
+        - item.feeds.each do |feed|
+          = feed.to_html_link
+
+        %h2 Tags
+        #tag_cloud= Tag.tag_cloud
+
+        %h2 GitHub projects
+        %ul#github-badge
+        - GitHub.repos.each do |repo|
+          %li
+            %a{href: repo.url} repo.name
+
+        %h2
+          Twitter
+          %a{href: "http://twitter.com/botanicus"} @botanicus
+        #tweets-here
+
+        / Recent comments on Disquis
+        = partial "./recent_comments.html"
+
+      #footer.span-24 &copy; 2010 &ndash; #{Time.now.year} James C Russell aka botanicus | Powered by <a href="https://github.com/botanicus/ace">Ace</a>.
